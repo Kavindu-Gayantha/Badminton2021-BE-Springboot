@@ -1,5 +1,6 @@
 package com.example.badminton2021be.badminton_backend_2021.service.serviceImpl;
 
+import com.example.badminton2021be.badminton_backend_2021.domain.Faculty;
 import com.example.badminton2021be.badminton_backend_2021.domain.Players;
 import com.example.badminton2021be.badminton_backend_2021.dto.FacultyDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
@@ -42,6 +43,45 @@ public class PlayerServiceImpl implements PlayerService {
 
     }
 
+    @Override
+    public ResponseDto createPlayer(PlayersDto playersDto) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(playersDto != null) {
+            Players players = convertPlayerDtoToDomain(playersDto);
+
+            if(players != null) {
+
+                Players playersAfterSave = playerRepository.save(players);
+                responseDto.setStatus(true);
+                responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
+                responseDto.setData(playersAfterSave);
+                return responseDto;
+
+            } else {
+                responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+                responseDto.setStatus(false);
+                return responseDto;
+            }
+        } else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+        }
+
+    }
+
+    private Players convertPlayerDtoToDomain(PlayersDto playersDto) {
+        Players players = new Players();
+
+        players.setDeleted(false);
+        players.setGender(playersDto.getGender());
+        players.setName(playersDto.getName());
+        players.setFaculty(playersDto.getFacultyName());
+
+        return players;
+    }
+
     private PlayersDto convertPlayersDomainToDto(Players players) {
         PlayersDto playersDto = new PlayersDto();
 
@@ -52,7 +92,7 @@ public class PlayerServiceImpl implements PlayerService {
 //        facultyDto.setId(players.getFacultyId().getId());
 //        facultyDto.setFaculty(players.getFacultyId().getFacultyName());
 
-        playersDto.setFaculty(players.getFacultyId().getFacultyName());
+        playersDto.setFacultyName(players.getFaculty());
         playersDto.setGender(players.getGender());
         playersDto.setDeleted(players.getDeleted());
 
