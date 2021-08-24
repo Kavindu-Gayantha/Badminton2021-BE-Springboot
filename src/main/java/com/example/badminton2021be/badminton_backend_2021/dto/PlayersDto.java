@@ -6,7 +6,9 @@ public class PlayersDto {
 
     private String name;
 
-    private String faculty;
+//    private Long facultyId;
+
+    private String facultyName;
 
     private Boolean deleted;
 
@@ -28,13 +30,13 @@ public class PlayersDto {
         this.name = name;
     }
 
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
+//    public Long getFacultyId() {
+//        return facultyId;
+//    }
+//
+//    public void setFacultyId(Long facultyId) {
+//        this.facultyId = facultyId;
+//    }
 
     public Boolean getDeleted() {
         return deleted;
@@ -50,5 +52,13 @@ public class PlayersDto {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
     }
 }

@@ -17,8 +17,7 @@ public class Players {
 
     private String gender;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Faculty facultyId;
+    private String faculty;
 
     private Boolean deleted;
 
@@ -46,12 +45,12 @@ public class Players {
         this.gender = gender;
     }
 
-    public Faculty getFacultyId() {
-        return facultyId;
+    public String getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyId(Faculty facultyId) {
-        this.facultyId = facultyId;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public Boolean getDeleted() {
