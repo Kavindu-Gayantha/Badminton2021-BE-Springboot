@@ -10,4 +10,7 @@ public interface PlayerRepository extends CrudRepository<Players, Long> {
 
     @Query("SELECT u FROM Players u WHERE u.deleted = false ")
     List<Players> getAllActivePlayers();
+
+    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :male ")
+    List<Players> getAllActiveBoys(String male);
 }

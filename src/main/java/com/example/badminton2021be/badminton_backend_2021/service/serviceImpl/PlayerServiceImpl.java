@@ -71,6 +71,26 @@ public class PlayerServiceImpl implements PlayerService {
 
     }
 
+    @Override
+    public ResponseDto getAllActiveBoys() {
+        ResponseDto responseDto = new ResponseDto();
+
+        List<Players> allBoysList = playerRepository.getAllActiveBoys("Male");
+        List<PlayersDto> allBoysDto = new ArrayList<PlayersDto>();
+
+        for (Players boyPlayer : allBoysList) {
+            PlayersDto oneBoyPlayer = convertPlayersDomainToDto(boyPlayer);
+            allBoysDto.add(oneBoyPlayer);
+        }
+        if (allBoysDto != null) {
+        responseDto.setStatus(true);
+        responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_GET.getStatusMessage());
+        responseDto.setData(allBoysDto);
+    }
+
+        return responseDto;
+    }
+
     private Players convertPlayerDtoToDomain(PlayersDto playersDto) {
         Players players = new Players();
 
