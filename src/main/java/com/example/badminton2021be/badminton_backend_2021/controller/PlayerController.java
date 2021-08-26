@@ -30,5 +30,11 @@ public class PlayerController {
         ResponseDto responseDto = playerService.getAllActiveBoys();
         return responseDto;
     }
+    @GetMapping(value = "/getGirls")
+    public ResponseDto getGirls(){
+        ResponseDto responseDto = playerService.getAllActiveGirls();
+        return responseDto;
+    }
+
 
 }

@@ -10,4 +10,6 @@ public interface PlayerService {
     ResponseDto createPlayer(PlayersDto playersDto);
 
     ResponseDto getAllActiveBoys();
+
+    ResponseDto getAllActiveGirls();
 }
