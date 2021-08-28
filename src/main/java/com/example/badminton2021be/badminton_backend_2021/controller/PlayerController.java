@@ -31,6 +31,12 @@ public class PlayerController {
         return responseDto;
     }
 
+    @DeleteMapping(value = "/delete/{id}") // delete/3   API is like this
+    public ResponseDto deletePlayer(@PathVariable Long id){
+        ResponseDto responseDto = playerService.deletePlayer(id);
+        return responseDto;
+    }
+
     @GetMapping(value = "/getBoys")
     public ResponseDto getBoys(){
         ResponseDto responseDto = playerService.getAllActiveBoys();

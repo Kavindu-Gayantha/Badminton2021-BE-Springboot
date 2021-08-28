@@ -14,4 +14,6 @@ public interface PlayerService {
     ResponseDto getAllActiveGirls();
 
     ResponseDto editPlayer(PlayersDto playersDto);
+
+    ResponseDto deletePlayer(Long id);
 }
