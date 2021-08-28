@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -108,6 +109,43 @@ public class PlayerServiceImpl implements PlayerService {
             responseDto.setData(allGirlsDto);
         }
 
+        return responseDto;
+    }
+
+    @Override
+    public ResponseDto editPlayer(PlayersDto playersDto) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(playersDto != null) {
+            Optional<Players> getPlayerByIdOptional = playerRepository.findById(playersDto.getId());
+
+            if(getPlayerByIdOptional.isPresent()){
+                Players getExistingPlayerById = getPlayerByIdOptional.get();
+                if(getExistingPlayerById != null) {
+                    Players newUpdatedPlayerDomain = convertPlayerDtoToDomain(playersDto);
+                    getExistingPlayerById.setFaculty(newUpdatedPlayerDomain.getFaculty() != null ? newUpdatedPlayerDomain.getFaculty(): getExistingPlayerById.getFaculty());
+                    getExistingPlayerById.setName(newUpdatedPlayerDomain.getName() != null ? newUpdatedPlayerDomain.getName() : getExistingPlayerById.getName());
+                    getExistingPlayerById.setGender(newUpdatedPlayerDomain.getGender() != null ? newUpdatedPlayerDomain.getGender() : getExistingPlayerById.getGender());
+                    getExistingPlayerById.setDeleted(getExistingPlayerById.getDeleted());
+                    getExistingPlayerById.setId(getExistingPlayerById.getId());
+                    getExistingPlayerById = playerRepository.save(getExistingPlayerById);
+
+                    responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_UPDATED.getStatusMessage());
+                    responseDto.setStatus(true);
+                    responseDto.setData(getExistingPlayerById);
+                    return responseDto;
+                }
+
+            } else {
+                responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                responseDto.setStatus(false);
+                return responseDto;
+            }
+        } else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+        }
         return responseDto;
     }
 
