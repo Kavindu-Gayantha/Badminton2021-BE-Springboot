@@ -149,6 +149,39 @@ public class PlayerServiceImpl implements PlayerService {
         return responseDto;
     }
 
+    @Override
+    public ResponseDto deletePlayer(Long id) {
+        ResponseDto responseDto = new ResponseDto();
+        if(id != null) {
+            Optional<Players> getPlayerOptionalById = playerRepository.findById(id);
+
+            if(getPlayerOptionalById.isPresent()){
+                Players existingPlayer = getPlayerOptionalById.get();
+
+                if(existingPlayer != null){
+                    existingPlayer.setDeleted(true);
+                    existingPlayer = playerRepository.save(existingPlayer);
+
+                    responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_DELETED.getStatusMessage());
+                    responseDto.setStatus(true);
+                    responseDto.setData(existingPlayer);
+                    return responseDto;
+                }
+
+            } else {
+                responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                responseDto.setStatus(false);
+                return responseDto;
+            }
+
+        } else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+        }
+        return null;
+    }
+
     private Players convertPlayerDtoToDomain(PlayersDto playersDto) {
         Players players = new Players();
 
