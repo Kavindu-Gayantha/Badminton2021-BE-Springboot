@@ -25,6 +25,12 @@ public class PlayerController {
         return responseDto;
     }
 
+    @PutMapping(value = "/edit")
+    public ResponseDto editPlayer(@RequestBody PlayersDto playersDto) {
+        ResponseDto responseDto = playerService.editPlayer(playersDto);
+        return responseDto;
+    }
+
     @GetMapping(value = "/getBoys")
     public ResponseDto getBoys(){
         ResponseDto responseDto = playerService.getAllActiveBoys();

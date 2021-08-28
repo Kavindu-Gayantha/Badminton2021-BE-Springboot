@@ -12,4 +12,6 @@ public interface PlayerService {
     ResponseDto getAllActiveBoys();
 
     ResponseDto getAllActiveGirls();
+
+    ResponseDto editPlayer(PlayersDto playersDto);
 }
