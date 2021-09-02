@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +36,40 @@ public class SmsAlertServiceImpl implements SmsAlertService {
 
         return responseDto;
 //        return null;
+    }
+
+    @Override
+    public ResponseDto createSmsAlert(SmsAlertDto smsAlertDto) {
+        ResponseDto responseDto = new ResponseDto();
+        if(smsAlertDto != null) {
+            SmsAlertDomain convertedSms = convertSmsAlertDtoToDomain(smsAlertDto);
+
+            if(convertedSms != null){
+                convertedSms = smsAlertRepository.save(convertedSms);
+                responseDto.setData(convertedSms);
+                responseDto.setStatus(true);
+                responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
+                return responseDto;
+
+            } else {
+                responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+                responseDto.setStatus(false);
+                return responseDto;
+
+            }
+        } else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+        }
+//        return null;
+    }
+
+    private SmsAlertDomain convertSmsAlertDtoToDomain(SmsAlertDto smsAlertDto) {
+        SmsAlertDomain smsAlertDomain = new SmsAlertDomain();
+        smsAlertDomain.setMsg(smsAlertDomain.getMsg());
+        smsAlertDomain.setTimestamp(new Date());
+        return smsAlertDomain;
     }
 
     private SmsAlertDto convertSmsAlertDomainToDto(SmsAlertDomain smsAlertOne) {
