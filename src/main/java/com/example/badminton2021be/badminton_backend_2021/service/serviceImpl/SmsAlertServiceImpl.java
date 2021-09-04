@@ -67,7 +67,7 @@ public class SmsAlertServiceImpl implements SmsAlertService {
 
     private SmsAlertDomain convertSmsAlertDtoToDomain(SmsAlertDto smsAlertDto) {
         SmsAlertDomain smsAlertDomain = new SmsAlertDomain();
-        smsAlertDomain.setMsg(smsAlertDomain.getMsg());
+        smsAlertDomain.setMsg(smsAlertDto.getMsg());
         smsAlertDomain.setTimestamp(new Date());
         return smsAlertDomain;
     }
