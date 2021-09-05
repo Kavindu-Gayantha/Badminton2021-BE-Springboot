@@ -33,6 +33,34 @@ public class VideoServiceImpl implements VideoService {
         return responseDto;
     }
 
+    @Override
+    public ResponseDto createVideoLink(VideoDto videoDto) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(videoDto != null){
+            VideoDomain convertedVideObj = convertVideoDtoToDomain(videoDto);
+            convertedVideObj = videoRepository.save(convertedVideObj);
+
+            responseDto.setData(convertedVideObj);
+            responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
+            responseDto.setStatus(true);
+            return responseDto;
+
+        } else {
+            responseDto.setStatus(false);
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            return responseDto;
+        }
+//        return null;
+    }
+
+    private VideoDomain convertVideoDtoToDomain(VideoDto videoDto) {
+        VideoDomain videoDomain = new VideoDomain();
+
+        videoDomain.setYoutubeLink(videoDto.getYoutubeLink());
+        return videoDomain;
+    }
+
     private String getYoutubeIdFromYoutubeLink(String fullURL){
 
         String videoId = fullURL.substring(17);
