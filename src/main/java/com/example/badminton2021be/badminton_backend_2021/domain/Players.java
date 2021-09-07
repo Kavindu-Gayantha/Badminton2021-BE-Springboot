@@ -15,11 +15,17 @@ public class Players {
 
     private String name;
 
+    private String email;
+
     private String gender;
 
     private String faculty;
 
     private Boolean deleted;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reg_id", referencedColumnName = "reg_id")
+    private RegisterDomain regId;
 
     public Long getId() {
         return id;
@@ -59,5 +65,21 @@ public class Players {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public RegisterDomain getRegId() {
+        return regId;
+    }
+
+    public void setRegId(RegisterDomain regId) {
+        this.regId = regId;
     }
 }
