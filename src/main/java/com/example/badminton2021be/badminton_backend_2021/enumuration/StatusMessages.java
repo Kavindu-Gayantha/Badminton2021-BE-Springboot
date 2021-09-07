@@ -9,6 +9,7 @@ public enum StatusMessages {
     PAYMENT_NOT_DONE("Payments not done"),
     PLEASE_PROVIDE_REQUIRED_DATA("Please provide required data !"),
     ENTITY_ALREADY_EXIST_WITH_SAMENAME("Entity already exist with same name!"),
+    ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL("Entity already exist with same Email!"),
     INVALID_USER_PASSWORD("Invalid username and password!"),
     ENTRY_DOESNOT_EXIST("Entry doesn\'t exist");
 

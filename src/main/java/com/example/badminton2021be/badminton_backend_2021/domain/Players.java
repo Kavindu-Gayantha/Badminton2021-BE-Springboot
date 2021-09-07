@@ -23,9 +23,9 @@ public class Players {
 
     private Boolean deleted;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "reg_id", referencedColumnName = "reg_id")
-    private RegisterDomain regId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "register_id")
+    private RegisterDomain registerDomain;
 
     public Long getId() {
         return id;
@@ -75,11 +75,11 @@ public class Players {
         this.email = email;
     }
 
-    public RegisterDomain getRegId() {
-        return regId;
+    public RegisterDomain getRegisterDomain() {
+        return registerDomain;
     }
 
-    public void setRegId(RegisterDomain regId) {
-        this.regId = regId;
+    public void setRegisterDomain(RegisterDomain registerDomain) {
+        this.registerDomain = registerDomain;
     }
 }

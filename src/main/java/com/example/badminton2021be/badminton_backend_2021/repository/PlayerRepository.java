@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlayerRepository extends CrudRepository<Players, Long> {
 
@@ -16,4 +17,7 @@ public interface PlayerRepository extends CrudRepository<Players, Long> {
 
     @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :female ")
     List<Players> getAllActiveGirls(String female);
+
+    @Query("SELECT u FROM Players u WHERE u.email = :email AND u.deleted = false ")
+    Optional<Players> findByEmail(String email);
 }
