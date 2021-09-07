@@ -10,7 +10,7 @@ public class RegisterDto {
 
     private String email;
 
-    private String university;
+    private Long university;
 
     private String password;
 
@@ -24,14 +24,6 @@ public class RegisterDto {
 
     public Long getId() {
         return id;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public void setId(Long id) {
@@ -62,11 +54,11 @@ public class RegisterDto {
         this.email = email;
     }
 
-    public String getUniversity() {
+    public Long getUniversity() {
         return university;
     }
 
-    public void setUniversity(String university) {
+    public void setUniversity(Long university) {
         this.university = university;
     }
 
@@ -84,6 +76,14 @@ public class RegisterDto {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Boolean getActive() {

@@ -1,6 +1,8 @@
 package com.example.badminton2021be.badminton_backend_2021.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "register_details")
@@ -17,7 +19,9 @@ public class RegisterDomain {
 
     private String email;
 
-    private String university;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
     private String password;
 
@@ -61,11 +65,11 @@ public class RegisterDomain {
         this.email = email;
     }
 
-    public String getUniversity() {
+    public University getUniversity() {
         return university;
     }
 
-    public void setUniversity(String university) {
+    public void setUniversity(University university) {
         this.university = university;
     }
 
