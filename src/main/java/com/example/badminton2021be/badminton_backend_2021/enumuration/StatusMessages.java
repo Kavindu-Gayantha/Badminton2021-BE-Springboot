@@ -7,6 +7,7 @@ public enum StatusMessages {
     SUCCESSFULLY_DELETED("Successfully deleted!"),
     SUCCESSFULLY_GET("Get all successfully"),
     PAYMENT_NOT_DONE("Payments not done"),
+    SUCCESSFULLY_LOGIN("Successfully Logged in"),
     PLEASE_PROVIDE_REQUIRED_DATA("Please provide required data !"),
     ENTITY_ALREADY_EXIST_WITH_SAMENAME("Entity already exist with same name!"),
     ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL("Entity already exist with same Email!"),

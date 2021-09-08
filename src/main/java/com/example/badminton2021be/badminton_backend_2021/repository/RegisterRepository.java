@@ -10,4 +10,7 @@ public interface RegisterRepository extends CrudRepository<RegisterDomain, Long>
 
     @Query("SELECT u FROM RegisterDomain u WHERE u.email = :email and u.deleted = false ")
     Optional<RegisterDomain> findByEmail(String email);
+
+    @Query("SELECT u FROM RegisterDomain u WHERE u.email = :email and u.deleted = false AND u.isActive = true ")
+    RegisterDomain findUserByEmail(String email);
 }

@@ -1,6 +1,7 @@
 package com.example.badminton2021be.badminton_backend_2021.controller;
 
 import com.example.badminton2021be.badminton_backend_2021.domain.RegisterDomain;
+import com.example.badminton2021be.badminton_backend_2021.dto.LoginDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.service.AuthService;
@@ -20,6 +21,12 @@ public class AuthController {
     @PostMapping(value = "/register")
     public ResponseDto registerUser(@RequestBody RegisterDto registerDto){
         ResponseDto responseDto = authService.registerUser(registerDto);
+        return responseDto;
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseDto loginUser(@RequestBody LoginDto loginDto){
+        ResponseDto responseDto = authService.loginUser(loginDto);
         return responseDto;
     }
 }
