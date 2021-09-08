@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -100,7 +102,12 @@ public class AuthServiceImpl implements AuthService {
                 if(checkUser.getPassword().equals(loginDto.getPassword())){
                     responseDto.setStatus(true);
                     responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_LOGIN.getStatusMessage());
-                    responseDto.setData(checkUser.getEmail());
+                    Map loginDataMap = new HashMap();
+                    loginDataMap.put("email", checkUser.getEmail());
+                    loginDataMap.put("userType", checkUser.getUserType());
+                    loginDataMap.put("gender", checkUser.getGender());
+                    loginDataMap.put("firstName", checkUser.getFirstName());
+                    responseDto.setData(loginDataMap);
 
                     return responseDto;
                 } else {
