@@ -3,6 +3,7 @@ package com.example.badminton2021be.badminton_backend_2021.service.serviceImpl;
 import com.example.badminton2021be.badminton_backend_2021.domain.Players;
 import com.example.badminton2021be.badminton_backend_2021.domain.RegisterDomain;
 import com.example.badminton2021be.badminton_backend_2021.domain.University;
+import com.example.badminton2021be.badminton_backend_2021.dto.LoginDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
@@ -83,6 +84,38 @@ public class AuthServiceImpl implements AuthService {
         } else {
             responseDto.setStatus(false);
             responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            return responseDto;
+        }
+
+    }
+
+    @Override
+    public ResponseDto loginUser(LoginDto loginDto) {
+        ResponseDto responseDto = new ResponseDto();
+        if(loginDto != null) {
+            // check the username in register table
+            RegisterDomain checkUser = registerRepository.findUserByEmail(loginDto.getEmail());
+            // if yes, check with the password is correct or not
+            if(checkUser != null) {
+                if(checkUser.getPassword().equals(loginDto.getPassword())){
+                    responseDto.setStatus(true);
+                    responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_LOGIN.getStatusMessage());
+                    responseDto.setData(checkUser.getEmail());
+
+                    return responseDto;
+                } else {
+                    responseDto.setStatusMessage(StatusMessages.INVALID_USER_PASSWORD.getStatusMessage());
+                    responseDto.setStatus(false);
+                    return responseDto;
+                }
+            } else {
+                responseDto.setStatus(false);
+                responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                return responseDto;
+            }
+        } else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
             return responseDto;
         }
 
