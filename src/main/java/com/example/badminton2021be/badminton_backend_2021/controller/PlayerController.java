@@ -4,7 +4,13 @@ import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/players")
@@ -21,6 +27,8 @@ public class PlayerController {
 
     @PostMapping(value = "/create")
     public ResponseDto createPlayer(@RequestBody PlayersDto playersDto){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("hiLL>>>>> " + auth);
         ResponseDto responseDto = playerService.createPlayer(playersDto);
         return responseDto;
     }
@@ -45,6 +53,12 @@ public class PlayerController {
     @GetMapping(value = "/getGirls")
     public ResponseDto getGirls(){
         ResponseDto responseDto = playerService.getAllActiveGirls();
+        return responseDto;
+    }
+
+    @GetMapping(value = "/regDataByEmail/{email}")
+    public ResponseDto getPlayerRegDataByEmail(@PathVariable String email){
+        ResponseDto responseDto = playerService.getPlayerRegDataByEmail(email);
         return responseDto;
     }
 

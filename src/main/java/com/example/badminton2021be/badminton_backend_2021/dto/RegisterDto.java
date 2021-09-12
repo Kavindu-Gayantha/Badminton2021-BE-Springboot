@@ -12,6 +12,8 @@ public class RegisterDto {
 
     private Long university;
 
+    private String universityName;
+
     private String password;
 
     private String userType;
@@ -100,5 +102,13 @@ public class RegisterDto {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
     }
 }
