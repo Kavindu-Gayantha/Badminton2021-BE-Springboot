@@ -16,4 +16,6 @@ public interface PlayerService {
     ResponseDto editPlayer(PlayersDto playersDto);
 
     ResponseDto deletePlayer(Long id);
+
+    ResponseDto getPlayerRegDataByEmail(String email);
 }

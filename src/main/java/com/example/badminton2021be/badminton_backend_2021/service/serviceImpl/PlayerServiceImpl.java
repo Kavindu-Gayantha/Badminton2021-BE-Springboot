@@ -2,11 +2,15 @@ package com.example.badminton2021be.badminton_backend_2021.service.serviceImpl;
 
 import com.example.badminton2021be.badminton_backend_2021.domain.Faculty;
 import com.example.badminton2021be.badminton_backend_2021.domain.Players;
+import com.example.badminton2021be.badminton_backend_2021.domain.RegisterDomain;
+import com.example.badminton2021be.badminton_backend_2021.domain.University;
 import com.example.badminton2021be.badminton_backend_2021.dto.FacultyDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
+import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
 import com.example.badminton2021be.badminton_backend_2021.repository.PlayerRepository;
+import com.example.badminton2021be.badminton_backend_2021.repository.RegisterRepository;
 import com.example.badminton2021be.badminton_backend_2021.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     PlayerRepository playerRepository;
+
+    @Autowired
+    RegisterRepository registerRepository;
 
     @Override
     public ResponseDto getAllActivePlayers() {
@@ -180,6 +187,55 @@ public class PlayerServiceImpl implements PlayerService {
             return responseDto;
         }
         return null;
+    }
+
+    @Override
+    public ResponseDto getPlayerRegDataByEmail(String email) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if (email != null) {
+
+            Optional<RegisterDomain> userOptional = registerRepository.findByEmail(email);
+
+            if (userOptional.isPresent()){
+
+                RegisterDomain user = userOptional.get();
+                RegisterDto userDto = convertRegisterDomainToDto(user);
+
+                responseDto.setData(userDto);
+                responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_GET.getStatusMessage());
+                responseDto.setStatus(true);
+                return responseDto;
+
+            } else {
+
+                responseDto.setStatus(false);
+                responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                return responseDto;
+
+            }
+        } else {
+
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+
+        }
+
+    }
+
+    private RegisterDto convertRegisterDomainToDto(RegisterDomain user) {
+        RegisterDto registerDto = new RegisterDto();
+        registerDto.setUserType(user.getUserType());
+        registerDto.setActive(user.getActive());
+        registerDto.setLastName(user.getLastName());
+        registerDto.setGender(user.getGender());
+        registerDto.setEmail(user.getEmail());
+        registerDto.setDeleted(user.getDeleted());
+        registerDto.setFirstName(user.getFirstName());
+        registerDto.setUniversityName(user.getUniversity().getUniversity());
+
+        return registerDto;
     }
 
     private Players convertPlayerDtoToDomain(PlayersDto playersDto) {
