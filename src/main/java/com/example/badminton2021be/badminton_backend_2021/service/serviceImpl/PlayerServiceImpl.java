@@ -29,9 +29,9 @@ public class PlayerServiceImpl implements PlayerService {
     RegisterRepository registerRepository;
 
     @Override
-    public ResponseDto getAllActivePlayers() {
+    public ResponseDto getAllActivePlayers(Long loggedInUserUniId) {
         ResponseDto responseDto = new ResponseDto();
-        List<Players> playersList = playerRepository.getAllActivePlayers();
+        List<Players> playersList = playerRepository.getAllActivePlayers(loggedInUserUniId);
         List<PlayersDto> playersDtoList = new ArrayList<PlayersDto>();
 
 //        if (!playersList.isEmpty()){
@@ -262,6 +262,7 @@ public class PlayerServiceImpl implements PlayerService {
         playersDto.setFacultyName(players.getFaculty());
         playersDto.setGender(players.getGender());
         playersDto.setDeleted(players.getDeleted());
+        playersDto.setEmail(players.getEmail());
 
         return playersDto;
     }

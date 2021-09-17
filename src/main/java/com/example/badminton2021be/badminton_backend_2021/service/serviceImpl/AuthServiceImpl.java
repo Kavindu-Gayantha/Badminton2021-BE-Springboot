@@ -107,6 +107,8 @@ public class AuthServiceImpl implements AuthService {
                     loginDataMap.put("userType", checkUser.getUserType());
                     loginDataMap.put("gender", checkUser.getGender());
                     loginDataMap.put("firstName", checkUser.getFirstName());
+                    loginDataMap.put("regId", checkUser.getId());
+                    loginDataMap.put("uniId", checkUser.getUniversity().getId());
                     responseDto.setData(loginDataMap);
 
                     return responseDto;
