@@ -6,7 +6,7 @@ public class PlayersDto {
 
     private String name;
 
-//    private Long facultyId;
+    private String email;
 
     private String facultyName;
 
@@ -60,5 +60,13 @@ public class PlayersDto {
 
     public void setFacultyName(String facultyName) {
         this.facultyName = facultyName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

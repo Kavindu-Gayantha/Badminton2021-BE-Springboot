@@ -19,16 +19,16 @@ public class PlayerController {
     @Autowired
     PlayerService playerService;
 
-    @GetMapping(value = "/getAll")
-    public ResponseDto getAllPlayers(){
-        ResponseDto responseDto = playerService.getAllActivePlayers();
+    @GetMapping(value = "/getAll/{loggedInUserUniId}")
+    public ResponseDto getAllPlayers(@PathVariable("loggedInUserUniId") Long loggedInUserUniId){
+        ResponseDto responseDto = playerService.getAllActivePlayers(loggedInUserUniId);
         return responseDto;
     }
 
     @PostMapping(value = "/create")
     public ResponseDto createPlayer(@RequestBody PlayersDto playersDto){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("hiLL>>>>> " + auth);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println("hiLL>>>>> " + auth);
         ResponseDto responseDto = playerService.createPlayer(playersDto);
         return responseDto;
     }

@@ -82,4 +82,6 @@ public class Players {
     public void setRegisterDomain(RegisterDomain registerDomain) {
         this.registerDomain = registerDomain;
     }
+
+
 }

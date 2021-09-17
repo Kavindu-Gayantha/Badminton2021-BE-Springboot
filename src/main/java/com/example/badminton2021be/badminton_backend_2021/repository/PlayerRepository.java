@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface PlayerRepository extends CrudRepository<Players, Long> {
 
-    @Query("SELECT u FROM Players u WHERE u.deleted = false order by u.id desc")
-    List<Players> getAllActivePlayers();
+    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.registerDomain.university.id = :loggedInUserUniId order by u.id desc")
+    List<Players> getAllActivePlayers(Long loggedInUserUniId);
 
     @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :male ")
     List<Players> getAllActiveBoys(String male);
