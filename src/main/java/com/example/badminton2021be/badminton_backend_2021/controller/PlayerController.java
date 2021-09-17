@@ -45,14 +45,14 @@ public class PlayerController {
         return responseDto;
     }
 
-    @GetMapping(value = "/getBoys")
-    public ResponseDto getBoys(){
-        ResponseDto responseDto = playerService.getAllActiveBoys();
+    @GetMapping(value = "/getBoys/{loggedInUserUniId}")
+    public ResponseDto getBoys(@PathVariable("loggedInUserUniId") Long loggedInUserUniId){
+        ResponseDto responseDto = playerService.getAllActiveBoys(loggedInUserUniId);
         return responseDto;
     }
-    @GetMapping(value = "/getGirls")
-    public ResponseDto getGirls(){
-        ResponseDto responseDto = playerService.getAllActiveGirls();
+    @GetMapping(value = "/getGirls/{loggedInUserUniId}")
+    public ResponseDto getGirls(@PathVariable("loggedInUserUniId") Long loggedInUserUniId){
+        ResponseDto responseDto = playerService.getAllActiveGirls(loggedInUserUniId);
         return responseDto;
     }
 

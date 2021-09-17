@@ -12,11 +12,11 @@ public interface PlayerRepository extends CrudRepository<Players, Long> {
     @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.registerDomain.university.id = :loggedInUserUniId order by u.id desc")
     List<Players> getAllActivePlayers(Long loggedInUserUniId);
 
-    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :male ")
-    List<Players> getAllActiveBoys(String male);
+    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :male AND u.registerDomain.university.id = :loggedInUserUniId")
+    List<Players> getAllActiveBoys(String male, Long loggedInUserUniId);
 
-    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :female ")
-    List<Players> getAllActiveGirls(String female);
+    @Query("SELECT u FROM Players u WHERE u.deleted = false AND u.gender = :female AND u.registerDomain.university.id = :loggedInUserUniId")
+    List<Players> getAllActiveGirls(String female, Long loggedInUserUniId);
 
     @Query("SELECT u FROM Players u WHERE u.email = :email AND u.deleted = false ")
     Optional<Players> findByEmail(String email);
