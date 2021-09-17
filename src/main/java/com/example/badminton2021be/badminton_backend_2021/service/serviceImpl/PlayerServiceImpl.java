@@ -80,10 +80,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseDto getAllActiveBoys() {
+    public ResponseDto getAllActiveBoys(Long loggedInUserUniId) {
         ResponseDto responseDto = new ResponseDto();
 
-        List<Players> allBoysList = playerRepository.getAllActiveBoys("Male");
+        List<Players> allBoysList = playerRepository.getAllActiveBoys("Male", loggedInUserUniId);
         List<PlayersDto> allBoysDto = new ArrayList<PlayersDto>();
 
         for (Players boyPlayer : allBoysList) {
@@ -100,10 +100,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseDto getAllActiveGirls() {
+    public ResponseDto getAllActiveGirls(Long loggedInUserUniId) {
         ResponseDto responseDto = new ResponseDto();
 
-        List<Players> allGirlsList = playerRepository.getAllActiveGirls("Female");
+        List<Players> allGirlsList = playerRepository.getAllActiveGirls("Female", loggedInUserUniId);
         List<PlayersDto> allGirlsDto = new ArrayList<PlayersDto>();
 
         for (Players girlPlayer : allGirlsList) {

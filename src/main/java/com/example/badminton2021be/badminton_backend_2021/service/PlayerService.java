@@ -9,9 +9,9 @@ public interface PlayerService {
 
     ResponseDto createPlayer(PlayersDto playersDto);
 
-    ResponseDto getAllActiveBoys();
+    ResponseDto getAllActiveBoys(Long loggedInUserUniId);
 
-    ResponseDto getAllActiveGirls();
+    ResponseDto getAllActiveGirls(Long loggedInUserUniId);
 
     ResponseDto editPlayer(PlayersDto playersDto);
 
