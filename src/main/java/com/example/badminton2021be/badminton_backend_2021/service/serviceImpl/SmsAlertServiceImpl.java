@@ -19,10 +19,10 @@ public class SmsAlertServiceImpl implements SmsAlertService {
     SmsAlertRepository smsAlertRepository;
 
     @Override
-    public ResponseDto getAllSmsAlerts() {
+    public ResponseDto getAllSmsAlerts(Long loggedInUserUniId) {
         ResponseDto responseDto = new ResponseDto();
 
-        List<SmsAlertDomain> getAllSms = smsAlertRepository.getAllActiveSms();
+        List<SmsAlertDomain> getAllSms = smsAlertRepository.getAllActiveSms(loggedInUserUniId);
         List<SmsAlertDto> alertDtoList = new ArrayList<SmsAlertDto>();
 
         for(SmsAlertDomain smsAlertOne: getAllSms){

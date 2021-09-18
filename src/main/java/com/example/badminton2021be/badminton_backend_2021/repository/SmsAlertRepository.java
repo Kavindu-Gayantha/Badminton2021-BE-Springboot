@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SmsAlertRepository extends CrudRepository<SmsAlertDomain, Long> {
 
-    @Query("SELECT u FROM SmsAlertDomain u order by u.id desc ")
+    @Query("SELECT u FROM SmsAlertDomain u WHERE u.university.id = :loggedInUserUniId order by u.id desc ")
 //    @Query("SELECT u FROM SmsAlertDomain u ")
-    List<SmsAlertDomain> getAllActiveSms();
+    List<SmsAlertDomain> getAllActiveSms(Long loggedInUserUniId);
 }

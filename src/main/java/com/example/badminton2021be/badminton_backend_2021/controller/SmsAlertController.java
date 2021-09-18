@@ -13,9 +13,9 @@ public class SmsAlertController {
     @Autowired
     SmsAlertService smsAlertService;
 
-    @GetMapping(value = "/getAll")
-    public ResponseDto getAllSmsAlerts(){
-        ResponseDto responseDto = smsAlertService.getAllSmsAlerts();
+    @GetMapping(value = "/getAll/{loggedInUserUniId}")
+    public ResponseDto getAllSmsAlerts(@PathVariable("loggedInUserUniId") Long loggedInUserUniId){
+        ResponseDto responseDto = smsAlertService.getAllSmsAlerts(loggedInUserUniId);
         return responseDto;
     }
 
