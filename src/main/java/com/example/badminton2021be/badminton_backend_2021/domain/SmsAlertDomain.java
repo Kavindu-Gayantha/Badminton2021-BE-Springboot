@@ -16,6 +16,10 @@ public class SmsAlertDomain{
 
     private String msg;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
+
     public Long getId() {
         return id;
     }
@@ -38,5 +42,13 @@ public class SmsAlertDomain{
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }
