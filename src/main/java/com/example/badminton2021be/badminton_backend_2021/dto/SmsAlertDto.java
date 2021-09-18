@@ -10,6 +10,8 @@ public class SmsAlertDto {
 
     private String msg;
 
+    private Long uniIdFromToken;
+
     public Long getId() {
         return id;
     }
@@ -32,5 +34,13 @@ public class SmsAlertDto {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Long getUniIdFromToken() {
+        return uniIdFromToken;
+    }
+
+    public void setUniIdFromToken(Long uniIdFromToken) {
+        this.uniIdFromToken = uniIdFromToken;
     }
 }
