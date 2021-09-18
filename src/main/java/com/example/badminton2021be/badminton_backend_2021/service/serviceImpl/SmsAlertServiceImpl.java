@@ -1,6 +1,7 @@
 package com.example.badminton2021be.badminton_backend_2021.service.serviceImpl;
 
 import com.example.badminton2021be.badminton_backend_2021.domain.SmsAlertDomain;
+import com.example.badminton2021be.badminton_backend_2021.domain.University;
 import com.example.badminton2021be.badminton_backend_2021.dto.SmsAlertDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
@@ -69,6 +70,11 @@ public class SmsAlertServiceImpl implements SmsAlertService {
         SmsAlertDomain smsAlertDomain = new SmsAlertDomain();
         smsAlertDomain.setMsg(smsAlertDto.getMsg());
         smsAlertDomain.setTimestamp(new Date());
+
+        University university = new University();
+        university.setId(smsAlertDto.getUniIdFromToken());
+        smsAlertDomain.setUniversity(university);
+
         return smsAlertDomain;
     }
 
@@ -77,6 +83,7 @@ public class SmsAlertServiceImpl implements SmsAlertService {
         smsAlertDto.setId(smsAlertOne.getId());
         smsAlertDto.setMsg(smsAlertOne.getMsg());
         smsAlertDto.setTimestamp(smsAlertOne.getTimestamp());
+        smsAlertDto.setUniIdFromToken(smsAlertOne.getUniversity().getId());
         return smsAlertDto;
     }
 }
