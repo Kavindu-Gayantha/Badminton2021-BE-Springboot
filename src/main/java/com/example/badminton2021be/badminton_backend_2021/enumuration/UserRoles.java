@@ -1,10 +1,8 @@
 package com.example.badminton2021be.badminton_backend_2021.enumuration;
 
 public enum UserRoles {
-    ADMIN("admin", 1),
-    CUSTOMER("customer", 2),
-    KITCHEN_ADMIN("kitchenadmin", 3),
-    SUPER_ADMIN("superAdmin", 4);
+    ADMIN("Admin", 1),
+    USER("Admin not", 2);
 
     private String userRole;
 

@@ -9,6 +9,7 @@ import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
+import com.example.badminton2021be.badminton_backend_2021.enumuration.UserRoles;
 import com.example.badminton2021be.badminton_backend_2021.repository.PlayerRepository;
 import com.example.badminton2021be.badminton_backend_2021.repository.RegisterRepository;
 import com.example.badminton2021be.badminton_backend_2021.service.PlayerService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -52,32 +54,128 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ResponseDto createPlayer(PlayersDto playersDto) {
+    public ResponseDto createPlayer(RegisterDto registerDto, Long loggedInUserUniId) {
         ResponseDto responseDto = new ResponseDto();
 
-        if(playersDto != null) {
-            Players players = convertPlayerDtoToDomain(playersDto);
+        if(registerDto != null) {
+            RegisterDomain convertedRegDomain = convertRegDtoToDomainForPlayerAdding(registerDto, loggedInUserUniId);
 
-            if(players != null) {
+            // check the email duplication in db
+            Optional<RegisterDomain> registerObjectWithEmail = registerRepository.findByEmail(convertedRegDomain.getEmail());
 
-                Players playersAfterSave = playerRepository.save(players);
-                responseDto.setStatus(true);
-                responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
-                responseDto.setData(playersAfterSave);
-                return responseDto;
-
-            } else {
-                responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            if(registerObjectWithEmail.isPresent()){
+                responseDto.setStatusMessage(StatusMessages.ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL.getStatusMessage());
                 responseDto.setStatus(false);
                 return responseDto;
+            } else {
+                // save domain in the db
+                RegisterDomain persistedRegObject = registerRepository.save(convertedRegDomain);
+//                responseDto.setData(persistedRegObject);
+
+                // check the email is in the player table or not. if yes => set the reg id in there. if not set the object in the player table too
+                Optional<Players> playerObjWithEmail = playerRepository.findByEmail(persistedRegObject.getEmail());
+
+                if(playerObjWithEmail.isPresent()){ // check the registered email is already in the player table or not
+                    Players existingPlayer = playerObjWithEmail.get();
+
+                    RegisterDomain registerDomain = new RegisterDomain();
+                    registerDomain.setId(persistedRegObject.getId());
+                    existingPlayer.setRegisterDomain(registerDomain); // set registration id into the object which has the same email in the player.
+
+                    existingPlayer = playerRepository.save(existingPlayer);
+
+                } else {
+                    // reg email is not in the player table. so put the reg object in player table
+                    Players newlyRegisteredPlayer = new Players();
+
+                    RegisterDomain registerDomain = new RegisterDomain();
+                    registerDomain.setId(persistedRegObject.getId());
+                    newlyRegisteredPlayer.setRegisterDomain(registerDomain);
+
+//                    newlyRegisteredPlayer.setFaculty();
+                    newlyRegisteredPlayer.setDeleted(false);
+                    newlyRegisteredPlayer.setName(persistedRegObject.getFirstName());
+                    newlyRegisteredPlayer.setGender(persistedRegObject.getGender());
+                    newlyRegisteredPlayer.setEmail(persistedRegObject.getEmail());
+
+                    newlyRegisteredPlayer = playerRepository.save(newlyRegisteredPlayer); // added new player which registered newly
+                }
+
+                responseDto.setData(persistedRegObject);
+                responseDto.setStatus(true);
+                responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
+
+                return responseDto;
             }
+
         } else {
-            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
             responseDto.setStatus(false);
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
             return responseDto;
         }
 
+
+//        if(registerDto != null) {
+////            Players players = convertPlayerDtoToDomain(registerDto);
+//
+//            RegisterDomain playerAdding = convert
+//            if(players != null) {
+//
+//                Players playersAfterSave = playerRepository.save(players);
+//                responseDto.setStatus(true);
+//                responseDto.setStatusMessage(StatusMessages.ADDED_SUCCESSFULLY.getStatusMessage());
+//                responseDto.setData(playersAfterSave);
+//                return responseDto;
+//
+//            } else {
+//                responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+//                responseDto.setStatus(false);
+//                return responseDto;
+//            }
+//        } else {
+//            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+//            responseDto.setStatus(false);
+//            return responseDto;
+//        }
+
     }
+
+    private RegisterDomain convertRegDtoToDomainForPlayerAdding(RegisterDto registerDto, Long adminUniId) {
+        RegisterDomain registerDomain = new RegisterDomain();
+
+        registerDomain.setDeleted(false);
+        registerDomain.setEmail(registerDto.getEmail());
+        registerDomain.setGender(registerDto.getGender());
+        registerDomain.setFirstName(registerDto.getFirstName());
+        registerDomain.setActive(true);
+        registerDomain.setLastName(registerDto.getLastName());
+
+        String randomPwd = generateRandomPassword(5);
+        // TODO email to the email the password;
+
+        registerDomain.setPassword(randomPwd);
+
+        University university = new University();
+        university.setId(adminUniId);
+        registerDomain.setUniversity(university);
+
+        registerDomain.setUserType(UserRoles.USER.getUserRole());
+
+
+        return registerDomain;
+    }
+
+
+        public static String generateRandomPassword(int len) {
+            String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
+                    +"jklmnopqrstuvwxyz!@#$%&";
+            Random rnd = new Random();
+            StringBuilder sb = new StringBuilder(len);
+            for (int i = 0; i < len; i++)
+                sb.append(chars.charAt(rnd.nextInt(chars.length())));
+            return sb.toString();
+        }
+
 
     @Override
     public ResponseDto getAllActiveBoys(Long loggedInUserUniId) {

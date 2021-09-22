@@ -1,6 +1,7 @@
 package com.example.badminton2021be.badminton_backend_2021.controller;
 
 import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
+import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class PlayerController {
         return responseDto;
     }
 
-    @PostMapping(value = "/create")
-    public ResponseDto createPlayer(@RequestBody PlayersDto playersDto){
+    @PostMapping(value = "/create/{loggedInUserUniId}")
+    public ResponseDto createPlayer(@RequestBody RegisterDto registerDto, @PathVariable("loggedInUserUniId") Long loggedInUserUniId){
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        System.out.println("hiLL>>>>> " + auth);
-        ResponseDto responseDto = playerService.createPlayer(playersDto);
+        ResponseDto responseDto = playerService.createPlayer(registerDto, loggedInUserUniId);
         return responseDto;
     }
 
