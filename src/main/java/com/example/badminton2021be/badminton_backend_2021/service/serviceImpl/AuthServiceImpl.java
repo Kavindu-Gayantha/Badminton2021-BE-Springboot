@@ -7,6 +7,7 @@ import com.example.badminton2021be.badminton_backend_2021.dto.LoginDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.RegisterDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
+import com.example.badminton2021be.badminton_backend_2021.enumuration.UserRoles;
 import com.example.badminton2021be.badminton_backend_2021.repository.PlayerRepository;
 import com.example.badminton2021be.badminton_backend_2021.repository.RegisterRepository;
 import com.example.badminton2021be.badminton_backend_2021.service.AuthService;
@@ -38,10 +39,23 @@ public class AuthServiceImpl implements AuthService {
             // check the email duplication in db
             Optional<RegisterDomain> registerObjectWithEmail = registerRepository.findByEmail(convertedRegDomain.getEmail());
 
+
+            // check the given university has an admin or not.
+            Optional<RegisterDomain> registerObjectWithSameUniAdmin = registerRepository.findByUniIdAndAdmin(convertedRegDomain.getUniversity().getId(), UserRoles.ADMIN.getUserRole());
+            System.out.println("register user user type: " + convertedRegDomain.getUserType());
+            System.out.println("register user user type is equeal: " + convertedRegDomain.getUserType().equals(UserRoles.ADMIN.getUserRole()));
+            System.out.println("register user user type is present &&&&&& : " + registerObjectWithSameUniAdmin.isPresent());
+
             if(registerObjectWithEmail.isPresent()){
                 responseDto.setStatusMessage(StatusMessages.ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL.getStatusMessage());
                 responseDto.setStatus(false);
                 return responseDto;
+            } else if(registerObjectWithSameUniAdmin.isPresent() && convertedRegDomain.getUserType().equals(UserRoles.ADMIN.getUserRole())){
+                   // this means this user is going to make an admin account at the same uni which already has an admin account. this not good
+
+                    responseDto.setStatus(false);
+                    responseDto.setStatusMessage(StatusMessages.SAME_UNI_AND_HAS_ADMIN.getStatusMessage());
+                    return responseDto;
             } else {
                 // save domain in the db
                 RegisterDomain persistedRegObject = registerRepository.save(convertedRegDomain);

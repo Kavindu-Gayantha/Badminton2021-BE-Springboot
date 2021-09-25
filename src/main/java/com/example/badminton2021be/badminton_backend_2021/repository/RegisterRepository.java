@@ -13,4 +13,7 @@ public interface RegisterRepository extends CrudRepository<RegisterDomain, Long>
 
     @Query("SELECT u FROM RegisterDomain u WHERE u.email = :email and u.deleted = false AND u.isActive = true ")
     RegisterDomain findUserByEmail(String email);
+
+    @Query("SELECT u FROM RegisterDomain u WHERE u.university.id = :id AND u.userType = :userRole AND u.isActive = true AND u.deleted = false ")
+    Optional<RegisterDomain> findByUniIdAndAdmin(Long id, String userRole);
 }
