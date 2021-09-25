@@ -10,8 +10,9 @@ public enum StatusMessages {
     SUCCESSFULLY_LOGIN("Successfully Logged in"),
     PLEASE_PROVIDE_REQUIRED_DATA("Please provide required data !"),
     ENTITY_ALREADY_EXIST_WITH_SAMENAME("Entity already exist with same name!"),
-    ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL("Entity already exist with same Email!"),
+    ENTITY_ALREADY_EXIST_WITH_SAME_EMAIL("User already exist with same Email!"),
     INVALID_USER_PASSWORD("Invalid username and password!"),
+    SAME_UNI_AND_HAS_ADMIN("You can\'t make an Admin account, Please make a User account instead!"),
     ENTRY_DOESNOT_EXIST("Entry doesn\'t exist");
 
     private String statusMessage;
