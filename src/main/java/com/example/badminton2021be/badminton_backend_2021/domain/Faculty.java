@@ -1,9 +1,6 @@
 package com.example.badminton2021be.badminton_backend_2021.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="faculty")
@@ -16,6 +13,10 @@ public class Faculty {
     private String facultyName;
 
     private Boolean deleted;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
     public Long getId() {
         return id;
@@ -39,5 +40,13 @@ public class Faculty {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }

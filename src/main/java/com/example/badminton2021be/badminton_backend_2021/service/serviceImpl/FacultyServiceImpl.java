@@ -18,10 +18,10 @@ public class FacultyServiceImpl implements FacultyService {
     FacultyRepository facultyRepository;
 
     @Override
-    public ResponseDto getAllActive() {
+    public ResponseDto getAllActive(Long loginUserUniId) {
         ResponseDto responseDto = new ResponseDto();
 
-        List<Faculty> facultyList = facultyRepository.getAllActive();
+        List<Faculty> facultyList = facultyRepository.getAllActiveByTokenUniId(loginUserUniId);
         List<FacultyDto> facultyDtoList = new ArrayList<FacultyDto>();
 
         for(Faculty faculty: facultyList) {

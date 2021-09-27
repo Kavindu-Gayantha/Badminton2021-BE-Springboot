@@ -49,7 +49,7 @@ public class ProfileServiceImpl implements ProfileService {
                     existingRegUser.setFirstName(convertedEditedRegisterPlayerObj.getFirstName() != null ? convertedEditedRegisterPlayerObj.getFirstName() : existingRegUser.getFirstName());
                     existingRegUser.setGender(convertedEditedRegisterPlayerObj.getGender() != null ? convertedEditedRegisterPlayerObj.getGender(): existingRegUser.getGender());
                     existingRegUser.setLastName(convertedEditedRegisterPlayerObj.getLastName() != null ? convertedEditedRegisterPlayerObj.getLastName(): existingRegUser.getLastName());
-                    existingRegUser.setPassword(convertedEditedRegisterPlayerObj.getPassword() != null ? convertedEditedRegisterPlayerObj.getPassword(): existingRegUser.getPassword());
+                    existingRegUser.setPassword((convertedEditedRegisterPlayerObj.getPassword() != null || convertedEditedRegisterPlayerObj.getPassword() != "") ? convertedEditedRegisterPlayerObj.getPassword(): existingRegUser.getPassword());
                     existingRegUser.setEmail(convertedEditedRegisterPlayerObj.getEmail() != null ? convertedEditedRegisterPlayerObj.getEmail() : existingRegUser.getEmail());
 
                     // no email duplication here. now can store in db

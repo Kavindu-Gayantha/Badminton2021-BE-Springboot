@@ -5,4 +5,6 @@ import com.example.badminton2021be.badminton_backend_2021.dto.common_module.Resp
 
 public interface AttendanceService {
     ResponseDto attendanceMarking(AttendanceDto attendanceDto);
+
+    ResponseDto getIndividualAttendanceDetailsByRegId(Long regId);
 }
