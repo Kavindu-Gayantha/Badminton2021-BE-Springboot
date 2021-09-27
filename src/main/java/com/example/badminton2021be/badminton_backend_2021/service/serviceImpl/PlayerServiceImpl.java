@@ -332,6 +332,7 @@ public class PlayerServiceImpl implements PlayerService {
         registerDto.setDeleted(user.getDeleted());
         registerDto.setFirstName(user.getFirstName());
         registerDto.setUniversityName(user.getUniversity().getUniversity());
+        registerDto.setId(user.getId());
 
         return registerDto;
     }

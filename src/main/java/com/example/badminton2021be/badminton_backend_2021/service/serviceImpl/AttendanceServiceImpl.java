@@ -8,8 +8,12 @@ import com.example.badminton2021be.badminton_backend_2021.dto.common_module.Resp
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
 import com.example.badminton2021be.badminton_backend_2021.repository.AttendanceRepository;
 import com.example.badminton2021be.badminton_backend_2021.service.AttendanceService;
+import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -56,6 +60,57 @@ public class AttendanceServiceImpl implements AttendanceService {
         return responseDto;
 
     }
+
+    @Override
+    public ResponseDto getIndividualAttendanceDetailsByRegId(Long regId) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(regId != null){
+            //GET ALL THE DATES INDIVIDUAL ATTENDED
+            Iterable<AttendanceDomain> listOfAttendanceByRegIdIterable = attendanceRepository.findAllByRegId(regId);
+            List<AttendanceDto> attendanceDtoListByRegId = new ArrayList<>();
+
+            if(listOfAttendanceByRegIdIterable != null) {
+
+                for(AttendanceDomain oneObjAttendanceDomain: listOfAttendanceByRegIdIterable){
+                    AttendanceDto attendanceDto = convertAttendanceDomainToDto(oneObjAttendanceDomain);
+
+                    attendanceDtoListByRegId.add(attendanceDto);
+                }
+
+                responseDto.setStatus(true);
+                responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_GET.getStatusMessage());
+                responseDto.setData(attendanceDtoListByRegId);
+                return responseDto;
+
+            } else {
+
+                responseDto.setStatus(false);
+                responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                return responseDto;
+            }
+
+
+        } else {
+
+            responseDto.setStatus(false);
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+
+            return responseDto;
+        }
+//        return null;
+    }
+
+    private AttendanceDto convertAttendanceDomainToDto(AttendanceDomain oneObjAttendanceDomain) {
+        AttendanceDto attendanceDto = new AttendanceDto();
+
+        attendanceDto.setDate(oneObjAttendanceDomain.getDate());
+        attendanceDto.setAddedAdminRegId(oneObjAttendanceDomain.getAddedAdminRegId().getId());
+        attendanceDto.setId(oneObjAttendanceDomain.getId());
+
+        return attendanceDto;
+    }
+
 
     private AttendanceDomain convertAttendanceDtoToDomain(AttendanceDto attendanceDto) {
         AttendanceDomain attendanceDomain = new AttendanceDomain();

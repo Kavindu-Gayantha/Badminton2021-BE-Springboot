@@ -10,4 +10,7 @@ public interface FacultyRepository extends CrudRepository<Faculty, Long> {
 
     @Query("SELECT u FROM Faculty u WHERE u.deleted = false")
     List<Faculty> getAllActive();
+
+    @Query("SELECT u FROM Faculty u WHERE u.deleted = false AND u.university.id = :loginUserUniId ")
+    List<Faculty> getAllActiveByTokenUniId(Long loginUserUniId);
 }
