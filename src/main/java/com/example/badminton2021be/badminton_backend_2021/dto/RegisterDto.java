@@ -24,6 +24,8 @@ public class RegisterDto {
 
     private Boolean deleted;
 
+    private String FacultyIdForEditProfile;
+
     public Long getId() {
         return id;
     }
@@ -110,5 +112,13 @@ public class RegisterDto {
 
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
+    }
+
+    public String getFacultyIdForEditProfile() {
+        return FacultyIdForEditProfile;
+    }
+
+    public void setFacultyIdForEditProfile(String facultyIdForEditProfile) {
+        FacultyIdForEditProfile = facultyIdForEditProfile;
     }
 }
