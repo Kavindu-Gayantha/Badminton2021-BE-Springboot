@@ -20,4 +20,7 @@ public interface PlayerRepository extends CrudRepository<Players, Long> {
 
     @Query("SELECT u FROM Players u WHERE u.email = :email AND u.deleted = false ")
     Optional<Players> findByEmail(String email);
+
+    @Query("SELECT u FROM Players u WHERE u.registerDomain.id = :id AND u.deleted = false ")
+    Optional<Players> getByRegId(Long id);
 }
