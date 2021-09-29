@@ -333,6 +333,7 @@ public class PlayerServiceImpl implements PlayerService {
         registerDto.setFirstName(user.getFirstName());
         registerDto.setUniversityName(user.getUniversity().getUniversity());
         registerDto.setId(user.getId());
+        registerDto.setFacultyIdForEditProfile(user.getFaculty() != null ? user.getFaculty().getFacultyName(): "");
 
         return registerDto;
     }

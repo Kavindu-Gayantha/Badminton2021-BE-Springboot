@@ -31,6 +31,7 @@ public class ProfileServiceImpl implements ProfileService {
         ResponseDto responseDto = new ResponseDto();
 
         if(registerDto != null) {
+            System.out.println("register dto: " + registerDto.getFacultyIdForEditProfile());
             RegisterDomain existingRegUser = registerRepository.findByRegId(registerDto.getId());
 
             if(existingRegUser != null) {

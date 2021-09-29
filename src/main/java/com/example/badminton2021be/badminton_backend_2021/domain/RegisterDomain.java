@@ -23,6 +23,10 @@ public class RegisterDomain {
     @JoinColumn(name = "university_id")
     private University university;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
     private String password;
 
     private String userType;
@@ -111,5 +115,13 @@ public class RegisterDomain {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }
