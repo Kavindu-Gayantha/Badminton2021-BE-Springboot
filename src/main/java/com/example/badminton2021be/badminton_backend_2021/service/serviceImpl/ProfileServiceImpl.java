@@ -50,7 +50,7 @@ public class ProfileServiceImpl implements ProfileService {
                     existingRegUser.setFirstName(convertedEditedRegisterPlayerObj.getFirstName() != null ? convertedEditedRegisterPlayerObj.getFirstName() : existingRegUser.getFirstName());
                     existingRegUser.setGender(convertedEditedRegisterPlayerObj.getGender() != null ? convertedEditedRegisterPlayerObj.getGender(): existingRegUser.getGender());
                     existingRegUser.setLastName(convertedEditedRegisterPlayerObj.getLastName() != null ? convertedEditedRegisterPlayerObj.getLastName(): existingRegUser.getLastName());
-                    existingRegUser.setPassword((convertedEditedRegisterPlayerObj.getPassword() != null || convertedEditedRegisterPlayerObj.getPassword() != "") ? convertedEditedRegisterPlayerObj.getPassword(): existingRegUser.getPassword());
+//                    existingRegUser.setPassword((convertedEditedRegisterPlayerObj.getPassword() != null || convertedEditedRegisterPlayerObj.getPassword() != "") ? convertedEditedRegisterPlayerObj.getPassword(): existingRegUser.getPassword());
                     existingRegUser.setEmail(convertedEditedRegisterPlayerObj.getEmail() != null ? convertedEditedRegisterPlayerObj.getEmail() : existingRegUser.getEmail());
 
                     // no email duplication here. now can store in db
@@ -66,7 +66,7 @@ public class ProfileServiceImpl implements ProfileService {
                         existingPlayer.setName(existingRegUser.getFirstName());
                         existingPlayer.setEmail(existingRegUser.getEmail());
                         existingPlayer.setGender(existingRegUser.getGender());
-                        existingPlayer.setFaculty(registerDto.getFacultyIdForEditProfile());
+//                        existingPlayer.setFaculty(registerDto.getFacultyIdForEditProfile());
 
                         existingPlayer = playerRepository.save(existingPlayer);
 
@@ -101,13 +101,13 @@ public class ProfileServiceImpl implements ProfileService {
         registerDomain.setFirstName(registerDto.getFirstName());
         registerDomain.setActive(true);
         registerDomain.setLastName(registerDto.getLastName());
-        registerDomain.setPassword(registerDto.getPassword());
+//        registerDomain.setPassword(registerDto.getPassword());
 
-        University university = new University();
-        university.setId(registerDto.getUniversity());
-        registerDomain.setUniversity(university);
+//        University university = new University();
+//        university.setId(registerDto.getUniversity());
+//        registerDomain.setUniversity(university);
 
-        registerDomain.setUserType(registerDto.getUserType());
+//        registerDomain.setUserType(registerDto.getUserType());
 
         return registerDomain;
     }
