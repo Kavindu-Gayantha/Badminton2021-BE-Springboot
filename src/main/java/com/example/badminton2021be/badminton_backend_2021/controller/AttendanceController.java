@@ -6,6 +6,8 @@ import com.example.badminton2021be.badminton_backend_2021.service.AttendanceServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping(value = "/attendance")
 public class AttendanceController {
@@ -19,9 +21,9 @@ public class AttendanceController {
         return responseDto;
     }
 
-    @GetMapping(value = "/getIndividual/{regId}")
-    public ResponseDto getIndividualAttendanceDetailsByRegId(@PathVariable("regId") Long regId ){
-        ResponseDto responseDto = attendanceService.getIndividualAttendanceDetailsByRegId(regId);
+    @GetMapping(value = "/getIndividual/{regId}/{uniId}")
+    public ResponseDto getIndividualAttendanceDetailsByRegId(@PathVariable("regId") Long regId,@PathVariable("uniId") Long uniId){
+        ResponseDto responseDto = attendanceService.getIndividualAttendanceDetailsByRegId(regId, uniId);
         return responseDto;
     }
 }

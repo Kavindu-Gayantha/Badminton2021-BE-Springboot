@@ -13,6 +13,14 @@ public class AttendanceDto {
 
     private Long[] attendantPlayerIds;
 
+    private Long attendanceForThisMonth;
+
+    private Long attendanceAllMonthCount;
+
+    private Long practiseHeldDaysForThisMonth;
+
+    private Long practiseHeldDaysAllMonthCount;
+
     public Long getId() {
         return id;
     }
@@ -43,6 +51,38 @@ public class AttendanceDto {
 
     public void setAttendantPlayerIds(Long[] attendantPlayerIds) {
         this.attendantPlayerIds = attendantPlayerIds;
+    }
+
+    public Long getAttendanceForThisMonth() {
+        return attendanceForThisMonth;
+    }
+
+    public void setAttendanceForThisMonth(Long attendanceForThisMonth) {
+        this.attendanceForThisMonth = attendanceForThisMonth;
+    }
+
+    public Long getAttendanceAllMonthCount() {
+        return attendanceAllMonthCount;
+    }
+
+    public void setAttendanceAllMonthCount(Long attendanceAllMonthCount) {
+        this.attendanceAllMonthCount = attendanceAllMonthCount;
+    }
+
+    public Long getPractiseHeldDaysForThisMonth() {
+        return practiseHeldDaysForThisMonth;
+    }
+
+    public void setPractiseHeldDaysForThisMonth(Long practiseHeldDaysForThisMonth) {
+        this.practiseHeldDaysForThisMonth = practiseHeldDaysForThisMonth;
+    }
+
+    public Long getPractiseHeldDaysAllMonthCount() {
+        return practiseHeldDaysAllMonthCount;
+    }
+
+    public void setPractiseHeldDaysAllMonthCount(Long practiseHeldDaysAllMonthCount) {
+        this.practiseHeldDaysAllMonthCount = practiseHeldDaysAllMonthCount;
     }
 }
 
