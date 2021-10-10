@@ -75,7 +75,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             //GET ALL THE DATES INDIVIDUAL ATTENDED
             Iterable<AttendanceDomain> listOfAttendanceByRegIdIterable = attendanceRepository.findAllByRegId(regId);
             List<AttendanceDomain> attendaceDataWithinThisMonth = attendanceRepository.findDatesCountOfAllTime(regId);
-            List<AttendanceDomain> allPractiseDataAllTheTime= attendanceRepository.findDatesCountOfAllTimeByAddedAdmin(uniId);
+            List<Date> allPractiseDataAllTheTime= attendanceRepository.findDatesCountOfAllTimeByAddedAdmin(uniId);
 
             List<AttendanceDto> attendanceDtoListByRegId = new ArrayList<>();
 
