@@ -14,7 +14,7 @@ public class AttendanceDomain {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reg_id")
+    @JoinColumn(name = "added_admin_id")
     private RegisterDomain addedAdminRegId;
 
     private Date date;

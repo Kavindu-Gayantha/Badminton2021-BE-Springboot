@@ -8,11 +8,13 @@ import com.example.badminton2021be.badminton_backend_2021.dto.common_module.Resp
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
 import com.example.badminton2021be.badminton_backend_2021.repository.AttendanceRepository;
 import com.example.badminton2021be.badminton_backend_2021.service.AttendanceService;
-import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,12 +26,12 @@ public class AttendanceServiceImpl implements AttendanceService {
     public ResponseDto attendanceMarking(AttendanceDto attendanceDto) {
         ResponseDto responseDto = new ResponseDto();
 
-        if(attendanceDto != null ) {
+        if (attendanceDto != null) {
 //            AttendanceDomain convertedAttendantPlayerData = convertAttendanceDtoToDomain(attendanceDto);
             //TODO - check the date is already is given
 
 
-            for(int i = 0; i <  attendanceDto.getAttendantPlayerIds().length; i++){
+            for (int i = 0; i < attendanceDto.getAttendantPlayerIds().length; i++) {
                 AttendanceDomain attendanceDomain = new AttendanceDomain();
 
                 RegisterDomain registerDomain = new RegisterDomain();
@@ -62,21 +64,34 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public ResponseDto getIndividualAttendanceDetailsByRegId(Long regId) {
+    public ResponseDto getIndividualAttendanceDetailsByRegId(Long regId, Long uniId) {
         ResponseDto responseDto = new ResponseDto();
+        Long count = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date fromDate = dateFormat.parse("2021-08-01");
+//        Date toDate = dateFormat.parse("2021-08-08");
 
-        if(regId != null){
+        if (regId != null) {
             //GET ALL THE DATES INDIVIDUAL ATTENDED
             Iterable<AttendanceDomain> listOfAttendanceByRegIdIterable = attendanceRepository.findAllByRegId(regId);
+            List<AttendanceDomain> attendaceDataWithinThisMonth = attendanceRepository.findDatesCountOfAllTime(regId);
+            List<AttendanceDomain> allPractiseDataAllTheTime= attendanceRepository.findDatesCountOfAllTimeByAddedAdmin(uniId);
+
             List<AttendanceDto> attendanceDtoListByRegId = new ArrayList<>();
 
-            if(listOfAttendanceByRegIdIterable != null) {
+            if (listOfAttendanceByRegIdIterable != null) {
 
-                for(AttendanceDomain oneObjAttendanceDomain: listOfAttendanceByRegIdIterable){
-                    AttendanceDto attendanceDto = convertAttendanceDomainToDto(oneObjAttendanceDomain);
-
-                    attendanceDtoListByRegId.add(attendanceDto);
-                }
+//                for (AttendanceDomain oneObjAttendanceDomain : listOfAttendanceByRegIdIterable) {
+//                    AttendanceDto attendanceDto = convertAttendanceDomainToDto(oneObjAttendanceDomain);
+//
+//                    attendanceDtoListByRegId.add(attendanceDto);
+//                    count = count + 1;
+//                }
+                AttendanceDto attendanceDto2 = new AttendanceDto();
+                attendanceDto2.setAttendanceAllMonthCount(count);
+                attendanceDto2.setAttendanceAllMonthCount(attendaceDataWithinThisMonth.stream().count());
+                attendanceDto2.setPractiseHeldDaysAllMonthCount(allPractiseDataAllTheTime.stream().count());
+                attendanceDtoListByRegId.add(attendanceDto2);
 
                 responseDto.setStatus(true);
                 responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_GET.getStatusMessage());
@@ -118,7 +133,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendanceDomain.setDate(attendanceDto.getDate());
         attendanceDomain.setAddedAdminRegId(attendanceDomain.getAddedAdminRegId());
 
-        for(Long oneId: attendanceDto.getAttendantPlayerIds()){
+        for (Long oneId : attendanceDto.getAttendantPlayerIds()) {
 
         }
 
