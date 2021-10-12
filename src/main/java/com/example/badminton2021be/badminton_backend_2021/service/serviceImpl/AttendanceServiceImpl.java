@@ -12,7 +12,6 @@ import com.example.badminton2021be.badminton_backend_2021.service.AttendanceServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,7 +139,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
             responseDto.setStatus(false);
             responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
-return responseDto;
+            return responseDto;
 
         }
 
