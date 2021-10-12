@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface SchedulePractiseRepository extends CrudRepository<SchedulePractiseDomain, Long> {
 
-    @Query("SELECT u FROM SchedulePractiseDomain u WHERE u.addedAdminId.id = :loginUserUniId")
+    @Query("SELECT u FROM SchedulePractiseDomain u WHERE u.addedAdminId.university.id = :loginUserUniId")
     List<SchedulePractiseDomain> getAllByUniId(Long loginUserUniId);
 }
