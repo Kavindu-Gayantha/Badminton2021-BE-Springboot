@@ -21,6 +21,8 @@ public class AttendanceDto {
 
     private Long practiseHeldDaysAllMonthCount;
 
+    private PlayersDto playersDto;
+
     public Long getId() {
         return id;
     }
@@ -83,6 +85,14 @@ public class AttendanceDto {
 
     public void setPractiseHeldDaysAllMonthCount(Long practiseHeldDaysAllMonthCount) {
         this.practiseHeldDaysAllMonthCount = practiseHeldDaysAllMonthCount;
+    }
+
+    public PlayersDto getPlayersDto() {
+        return playersDto;
+    }
+
+    public void setPlayersDto(PlayersDto playersDto) {
+        this.playersDto = playersDto;
     }
 }
 

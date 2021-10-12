@@ -20,4 +20,7 @@ public interface AttendanceRepository extends CrudRepository<AttendanceDomain, L
 
     @Query("SELECT DISTINCT u.date FROM AttendanceDomain u WHERE  u.addedAdminRegId.university.id = :uniId ")
     List<Date> findDatesCountOfAllTimeByAddedAdmin(Long uniId);
+
+    @Query("SELECT u FROM AttendanceDomain u WHERE u.attendantPlayer.registerDomain.university.id = :uniId")
+    List<AttendanceDomain> getAttendanceByUniId(Long uniId);
 }

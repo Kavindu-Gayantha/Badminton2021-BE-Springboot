@@ -26,4 +26,10 @@ public class AttendanceController {
         ResponseDto responseDto = attendanceService.getIndividualAttendanceDetailsByRegId(regId, uniId);
         return responseDto;
     }
+
+    @GetMapping(value = "/getAllAttendanceByUniId/{uniId}")
+    public ResponseDto getAllAttendanceByUniId(@PathVariable("uniId") Long uniId){
+        ResponseDto responseDto = attendanceService.getAllAttendanceByUniId(uniId);
+        return responseDto;
+    }
 }

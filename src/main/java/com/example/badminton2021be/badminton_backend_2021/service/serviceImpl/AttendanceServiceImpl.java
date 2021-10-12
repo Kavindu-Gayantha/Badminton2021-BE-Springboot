@@ -4,6 +4,7 @@ import com.example.badminton2021be.badminton_backend_2021.domain.AttendanceDomai
 import com.example.badminton2021be.badminton_backend_2021.domain.Players;
 import com.example.badminton2021be.badminton_backend_2021.domain.RegisterDomain;
 import com.example.badminton2021be.badminton_backend_2021.dto.AttendanceDto;
+import com.example.badminton2021be.badminton_backend_2021.dto.PlayersDto;
 import com.example.badminton2021be.badminton_backend_2021.dto.common_module.ResponseDto;
 import com.example.badminton2021be.badminton_backend_2021.enumuration.StatusMessages;
 import com.example.badminton2021be.badminton_backend_2021.repository.AttendanceRepository;
@@ -116,12 +117,47 @@ public class AttendanceServiceImpl implements AttendanceService {
 //        return null;
     }
 
+    @Override
+    public ResponseDto getAllAttendanceByUniId(Long uniId) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(uniId != null) {
+
+            List<AttendanceDomain> attendanceDomainList = attendanceRepository.getAttendanceByUniId(uniId);
+            List<AttendanceDto> attendanceDtoList = new ArrayList<AttendanceDto>();
+
+            for(AttendanceDomain oneRowDataDomain: attendanceDomainList){
+                AttendanceDto convertedAttendanceToDto = convertAttendanceDomainToDto(oneRowDataDomain);
+                attendanceDtoList.add(convertedAttendanceToDto);
+            }
+
+            responseDto.setStatus(true);
+            responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_GET.getStatusMessage());
+            responseDto.setData(attendanceDtoList);
+            return responseDto;
+
+        } else {
+
+            responseDto.setStatus(false);
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+return responseDto;
+
+        }
+
+    }
+
     private AttendanceDto convertAttendanceDomainToDto(AttendanceDomain oneObjAttendanceDomain) {
         AttendanceDto attendanceDto = new AttendanceDto();
 
         attendanceDto.setDate(oneObjAttendanceDomain.getDate());
         attendanceDto.setAddedAdminRegId(oneObjAttendanceDomain.getAddedAdminRegId().getId());
         attendanceDto.setId(oneObjAttendanceDomain.getId());
+
+        PlayersDto playersDto = new PlayersDto();
+        playersDto.setId(oneObjAttendanceDomain.getAttendantPlayer().getId());
+        playersDto.setEmail(oneObjAttendanceDomain.getAttendantPlayer().getEmail());
+        playersDto.setName(oneObjAttendanceDomain.getAttendantPlayer().getName());
+        attendanceDto.setPlayersDto(playersDto);
 
         return attendanceDto;
     }
