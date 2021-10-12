@@ -10,4 +10,6 @@ public interface AttendanceService {
     ResponseDto attendanceMarking(AttendanceDto attendanceDto);
 
     ResponseDto getIndividualAttendanceDetailsByRegId(Long regId, Long uniId);
+
+    ResponseDto getAllAttendanceByUniId(Long uniId);
 }
