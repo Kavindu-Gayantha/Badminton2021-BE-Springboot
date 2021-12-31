@@ -21,4 +21,11 @@ public class ProfileController {
         ResponseDto responseDto = profileService.editMyProfile(registerDto);
         return responseDto;
     }
+
+    // transfer account to another admin in the same university
+    @PostMapping(value = "/transferAdmin")
+    public ResponseDto transferAdmin(@RequestBody RegisterDto registerDto){
+        ResponseDto responseDto = profileService.transferAdminProfile(registerDto);
+        return responseDto;
+    }
 }

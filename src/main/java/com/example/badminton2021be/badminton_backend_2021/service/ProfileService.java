@@ -5,4 +5,6 @@ import com.example.badminton2021be.badminton_backend_2021.dto.common_module.Resp
 
 public interface ProfileService {
     ResponseDto editMyProfile(RegisterDto registerDto);
+
+    ResponseDto transferAdminProfile(RegisterDto registerDto);
 }

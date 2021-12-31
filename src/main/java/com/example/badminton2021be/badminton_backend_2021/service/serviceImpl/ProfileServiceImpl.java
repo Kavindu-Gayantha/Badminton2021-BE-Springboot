@@ -92,6 +92,40 @@ public class ProfileServiceImpl implements ProfileService {
 //        return null;
     }
 
+    @Override
+    public ResponseDto transferAdminProfile(RegisterDto registerDto) {
+        ResponseDto responseDto = new ResponseDto();
+
+        if(registerDto != null){
+            RegisterDomain convertedRegisterDomain = convertDtoToDomainReg(registerDto);
+
+            if(convertedRegisterDomain != null){
+                Optional<RegisterDomain> uniAdminExistingOptional = registerRepository.getAdminByUniId(registerDto.getUniversity());
+
+                if(uniAdminExistingOptional.isPresent()){
+                    uniAdminExistingOptional.get().setDeleted(true);
+                    registerRepository.save(uniAdminExistingOptional.get()); // delete existing Admin
+
+                    convertedRegisterDomain = registerRepository.save(convertedRegisterDomain);
+                    responseDto.setStatusMessage(StatusMessages.SUCCESSFULLY_ADMIN_CHANGED.getStatusMessage());
+                    responseDto.setStatus(true);
+                    responseDto.setData(convertedRegisterDomain);
+                    return responseDto;
+
+                } else {
+                    responseDto.setStatusMessage(StatusMessages.ENTRY_DOESNOT_EXIST.getStatusMessage());
+                    responseDto.setStatus(false);
+                    return responseDto;
+                }
+            }
+        }  else {
+            responseDto.setStatusMessage(StatusMessages.PLEASE_PROVIDE_REQUIRED_DATA.getStatusMessage());
+            responseDto.setStatus(false);
+            return responseDto;
+        }
+        return null;
+    }
+
     private RegisterDomain convertDtoToDomainReg(RegisterDto registerDto) {
         RegisterDomain registerDomain = new RegisterDomain();
 
