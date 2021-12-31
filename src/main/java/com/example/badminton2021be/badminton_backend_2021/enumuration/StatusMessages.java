@@ -4,6 +4,7 @@ public enum StatusMessages {
     ADDED_SUCCESSFULLY("Added successfully !"),
     CREATED_SUCCESSFULLY("Created successfully !"),
     SUCCESSFULLY_UPDATED("Successfully updated!"),
+    SUCCESSFULLY_ADMIN_CHANGED("Successfully Admin transferred!"),
     SUCCESSFULLY_DELETED("Successfully deleted!"),
     SUCCESSFULLY_GET("Get all successfully"),
     PAYMENT_NOT_DONE("Payments not done"),
